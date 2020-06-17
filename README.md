@@ -1,10 +1,15 @@
 # BattaleTank
-This is my Udemy Unreal course repository for the project called "Battle Tank". 
+This is my Udemy Unreal course repository for the practice project called "Battle Tank". 
 
-You're welcome to download, fork or do whatever else legal with all the files! You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urcgithub)
+You're welcome to download and do whatever else legal with all the files! 
+You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urcgithub)
 
-## 01 Create this repository 
+## Some Information maybe you need to know
+* Unreal Engine Version: 4.25.1
 
-### Day 01 ###
-
-* Setup the world map
+## Daily Update 
+### Day 01
+* Setup this repository
+* Setup new Unreal project
+* Update the .gitignore file
+* Setup and build heightmap of battle ground map by Landscape tool
