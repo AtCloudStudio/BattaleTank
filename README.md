@@ -20,3 +20,10 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Tank blueprint add 3rd person camera
 * Create new blueprint class "Input Setup", input binding for camera control
 * Build Input setup blueprint, implement camera x axis and y axis control , zoom in and out 
+
+### Day 03
+* Create player tank aim point UI
+* Create main menu Level  and UI, build  main menu UI blueprint
+* Create pause menu UI, build single key pause menu blueprint
+* Create PlayerTankController.Cpp Class and AITankController.Cpp Class
+* UE_LOG check those controllers correctly control their tank
