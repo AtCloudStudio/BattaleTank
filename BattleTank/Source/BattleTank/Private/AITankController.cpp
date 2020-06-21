@@ -17,12 +17,22 @@ void AAITankController::BeginPlay()
 		UE_LOG(LogTemp, Error, 
 			TEXT("AITankController can NOT find player tank!"));
 	}
-	else
+}
+
+void AAITankController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (!GetPlayerTank())
 	{
-		UE_LOG(LogTemp, Warning, 
-			TEXT("AITankController has found player: %s!"),
-			*GetPlayerTank()->GetName());
+		return;
 	}
+
+	//TODO Move towards player tank
+	//Aim towards player tank
+	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+	//TODO Fire if ready
 }
 
 ATank* AAITankController::GetControlledTank() const
