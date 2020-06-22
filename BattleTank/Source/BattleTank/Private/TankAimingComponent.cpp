@@ -1,33 +1,13 @@
 // Copyright RyanXu @CloudStudio
 
 #include "TankAimingComponent.h"
+#include "TankTurret.h"
+#include "TankBarrel.h"
 
-// //Sets default values for this component's properties
-//UTankAimingComponent::UTankAimingComponent()
-//{
-//	// Set this component to be initialized when the game starts, 
-//	// and to be ticked every frame. You can turn these features off 
-//	// to improve performance if you don't need them.
-//	PrimaryComponentTick.bCanEverTick = false;
-//}
-//
-//// Called when the game starts
-//void UTankAimingComponent::BeginPlay()
-//{
-//	Super::BeginPlay();
-//}
-//
-//// Called every frame
-//void UTankAimingComponent::TickComponent(float DeltaTime, 
-//	ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-//{
-//	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-//}
-//
-//void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
-//{
-//	Barrel = BarrelToSet;
-//}
+void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+{
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 {
@@ -36,16 +16,23 @@ void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
 
 void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 {
-	if (!Barrel)
+	if (!Turret)
 	{
+		UE_LOG(LogTemp, Error, TEXT("No turret on %s"), *GetOwner()->GetName());
+
+		return;
+	}
+	else if (!Barrel)
+	{
+		UE_LOG(LogTemp, Error, TEXT("No Barrel on %s"), *GetOwner()->GetName());
+
 		return;
 	}
 
 	FVector OUTLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Launch Port"));
 
-	//Calculate OUTLaunchVelocity
-	if (UGameplayStatics::SuggestProjectileVelocity(
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
 		GetOwner(),
 		OUTLaunchVelocity,
 		StartLocation,
@@ -54,7 +41,13 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 		false,
 		0.0f,
 		0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace))
+		ESuggestProjVelocityTraceOption::DoNotTrace);
+
+	if (!bHaveAimSolution)
+	{//TODO BUG movement oddly
+		return;
+	}
+	else
 	{
 		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
 		MoveBarrelTowards(AimDirection);
@@ -67,5 +60,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	auto DeltaRotator = 
 		AimDirection.Rotation() - Barrel->GetForwardVector().Rotation();
 
-	Barrel->Elevate(1.0f);	//TODO remove hardcode number
+	Turret->Rotate(DeltaRotator.Yaw);
+	Barrel->Elevate(DeltaRotator.Pitch);
 }

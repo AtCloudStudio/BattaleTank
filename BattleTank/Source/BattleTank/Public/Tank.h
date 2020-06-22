@@ -4,10 +4,12 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
-#include "TankAimingComponent.h"
 #include "Tank.generated.h"
 
+class UTankAimingComponent;
+class UTankTurret;
 class UTankBarrel;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -15,9 +17,6 @@ class BATTLETANK_API ATank : public APawn
 	GENERATED_BODY()
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	UTankAimingComponent* TankAimingComponent = nullptr;
 
 public:
@@ -27,12 +26,30 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent
 	(class UInputComponent* PlayerInputComponent) override;
-
+	
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetBarrelReference(UTankBarrel* Barrel);
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
 
-	UPROPERTY(EditAnyWhere, Category = Firing)
-		float LaunchSpeed = 100000;	//TODO find Sensible default value
+private:
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable, Category = Setup)
+	void SetBarrelReference(UTankBarrel* BarrelToSet);
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBluepirint;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float LaunchSpeed = 40000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float ReloadTime = 3.0f;
+
+	float LastFireTime = -3.0f;
+
+	//Local barrel reference for spawning projectile
+	UTankBarrel* Barrel = nullptr;
 };

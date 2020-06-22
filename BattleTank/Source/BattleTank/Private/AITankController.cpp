@@ -1,20 +1,23 @@
 // Copyright RyanXu @CloudStudio
 
 #include "AITankController.h"
+#include "Tank.h"
 
 void AAITankController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!GetControlledTank())
+	ControlledTank = Cast<ATank>(GetPawn());
+	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
+
+	if (!ControlledTank)
 	{
 		UE_LOG(LogTemp, Error, TEXT("%s missing AITankController!"), 
-			*GetControlledTank()->GetName());
+			*ControlledTank->GetName());
 	}
-
-	if (!GetPlayerTank())
+	else if (!PlayerTank)
 	{
-		UE_LOG(LogTemp, Error, 
+		UE_LOG(LogTemp, Error,
 			TEXT("AITankController can NOT find player tank!"));
 	}
 }
@@ -23,31 +26,16 @@ void AAITankController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!GetPlayerTank())
+	if (!PlayerTank)
 	{
 		return;
 	}
 
 	//TODO Move towards player tank
+
 	//Aim towards player tank
-	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	ControlledTank->AimAt(PlayerTank->GetActorLocation());
 
-	//TODO Fire if ready
-}
-
-ATank* AAITankController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
-ATank* AAITankController::GetPlayerTank() const
-{
-	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-
-	if (!PlayerTank)
-	{
-		return nullptr;
-	}
-
-	return Cast<ATank>(PlayerTank);
+	//If ready, fire
+	ControlledTank->Fire();
 }

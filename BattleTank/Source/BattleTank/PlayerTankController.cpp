@@ -1,6 +1,7 @@
 // Copyright RyanXu @CloudStudio
 
 #include "PlayerTankController.h"
+#include "Tank.h"
 
 void APlayerTankController::BeginPlay()
 {
@@ -37,7 +38,6 @@ void APlayerTankController::AimTowardsCrosshair()
 	{
 		//If hits any visible actor, tell controlled tank to aim at this location
 		GetControlledTank()->AimAt(HitLocation);
-		UE_LOG(LogTemp, Warning, TEXT("Barrel->Elevate() called."));
 	}
 }
 //Get world location of linetrace through crosshair, true if hits landscape

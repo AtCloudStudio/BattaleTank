@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-//#include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "TankBarrel.generated.h"
 
@@ -17,10 +16,10 @@ public:
 	void Elevate(float RelativeSpeed);
 
 private:
-	UPROPERTY(EditAnyWhere, Category = Setup)
-		float MaxDegreesPerSecond = 5.0f;	//TODO give sensible default value
-	UPROPERTY(EditAnyWhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		float MaxDegreesPerSecond = 10.0f;
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MaxElevationDegrees = 35.0f;
-	UPROPERTY(EditAnyWhere, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		float MinElevationDegrees = 0.0f;
 };

@@ -25,12 +25,20 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Create player tank aim point UI
 * Create main menu Level  and UI, build  main menu UI blueprint
 * Create pause menu UI, build single key pause menu blueprint
-* Create PlayerTankController.C++ Class and AITankController.C++ Class
+* Create PlayerTankController.C++ class and AITankController.C++ class
 * UE_LOG check those controllers correctly control their tank
 
 ### Day 04
 * Code player tank aiming system (aim through crosshair)
 * Code AI tank auto aiming system (Find player tank location and aim at it)
-* Create tank aiming component C++ Class
-* Create tank barrel C++ Class
+* Create TankAimingComponent C++ class
+* Create TankBarrel C++ class
 * Try to make barrel elevate, failed
+
+### Day 05
+* Make barrel auto elevate towards aim direction
+* Create TankTurret C++ class
+* Make turret auto rotate towards aim direction
+* Create Projectile C++ class and create a blueprint class based on it
+* Make tanks fire, but projectiles have no parabolic
+* Make some refactor of codes
