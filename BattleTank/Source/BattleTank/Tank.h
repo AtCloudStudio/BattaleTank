@@ -7,6 +7,7 @@
 #include "Tank.generated.h"
 
 class UTankAimingComponent;
+class UTankMovementComponent;
 class UTankTurret;
 class UTankBarrel;
 class AProjectile;
@@ -18,6 +19,7 @@ class BATTLETANK_API ATank : public APawn
 
 protected:
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	//UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:
 	// Sets default values for this pawn's properties

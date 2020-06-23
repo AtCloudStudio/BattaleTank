@@ -10,8 +10,8 @@
 class UTankTurret;
 class UTankBarrel;
 
-//Holds tank barrel's properties and Elevate method
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+//Holds tank turret and barrel's properties and movement functions
+UCLASS( ClassGroup = (Custom), meta = (BlueprintSpawnableComponent) )
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
 {
 	GENERATED_BODY()
@@ -24,6 +24,4 @@ public:
 private:
 	UTankTurret* Turret = nullptr;
 	UTankBarrel* Barrel = nullptr;
-
-	void MoveBarrelTowards(FVector AimDirection);
 };

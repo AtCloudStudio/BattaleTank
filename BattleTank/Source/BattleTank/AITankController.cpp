@@ -31,7 +31,8 @@ void AAITankController::Tick(float DeltaTime)
 		return;
 	}
 
-	//TODO Move towards player tank
+	//Move towards player tank
+	MoveToActor(PlayerTank, AcceptanceRadius);
 
 	//Aim towards player tank
 	ControlledTank->AimAt(PlayerTank->GetActorLocation());

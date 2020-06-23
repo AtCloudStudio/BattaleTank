@@ -9,36 +9,48 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 
 ## Daily Update 
 ### Day 01
-* Setup this repository
-* Create new Unreal project of this
-* Update .gitignore file
-* Create new landscape "battle ground" by Landscape tool
+* Initialized this repository
+* Created new Unreal project of this
+* Updated .gitignore file
+* Created new landscape "battle ground"
 
 ### Day 02
-* Create new low polygon landscape to replace high polygon game map
-* Create tank blueprint
-* Tank blueprint add 3rd person camera
-* Create new blueprint class "Input Setup", input binding for camera control
-* Build Input setup blueprint, implement camera x axis and y axis control , zoom in and out 
+* Created new low polygon landscape to replace the high polygon game map
+* Created tank blueprint
+* Added third person camera to Tank blueprint 
+* Created new blueprint class "Input Setup", setup input binding for camera control
+* Wired-up Input Setup blueprint, realized controlling camera axis x and y, zoom in and out 
 
 ### Day 03
-* Create player tank aim point UI
-* Create main menu Level  and UI, build  main menu UI blueprint
-* Create pause menu UI, build single key pause menu blueprint
-* Create PlayerTankController.C++ class and AITankController.C++ class
-* UE_LOG check those controllers correctly control their tank
+* Created player tank crosshair UI
+* Created Main Menu level  and UI, built  Main Menu UI blueprint
+* Created Pause Menu UI, built one key Pause Menu blueprint
+* Created PlayerTankController.C++ class and AITankController.C++ class
 
 ### Day 04
-* Code player tank aiming system (aim through crosshair)
-* Code AI tank auto aiming system (Find player tank location and aim at it)
-* Create TankAimingComponent C++ class
-* Create TankBarrel C++ class
-* Try to make barrel elevate, failed
+* Coded player tank aiming system (aim through crosshair)
+* Coded AI tank auto aiming system (Find player tank location and aim at it)
+* Created TankAimingComponent C++ class
+* Created TankBarrel C++ class
+* Tried to make barrel elevate, but failed
 
 ### Day 05
-* Make barrel auto elevate towards aim direction
-* Create TankTurret C++ class
-* Make turret auto rotate towards aim direction
-* Create Projectile C++ class and create a blueprint class based on it
-* Make tanks fire, but projectiles have no parabolic
-* Make some refactor of codes
+* Realized barrel auto elevate towards aim direction
+* Created TankTurret C++ class
+* Realized turret auto rotate towards aim direction
+* Created Projectile C++ class, created a blueprint class based on it
+* Realized tanks fire, but projectiles have no parabolic
+* Code refactored
+
+### Day 06
+* Tuned down projectile launch speed, now projectile has parabolic, but move speed is too low (Fix it in the future, maybe...) 
+* Added simpled collision to tank and projectile
+* Created TankTrack C++ class (component to apply movement force to the tank)
+* Input binding for left and right track throttle
+* Realized tank move (forward and backward)
+* Bug: Unreal Engine crashed when tried to delete a TankTrack component from tank blueprint, which happened every time (X_X don't know how to fix it, but at least I had added both left and right track to the tank)
+* After reinitialized project files (some deletes, some cuts and pastes), finally got rid of the bug above ^^
+* Created TankMovementComponent, realized tank turn (not really)
+* Realized player tank turning left and right
+* Realized AI Tanks auto move towards to player tank
+* That is funny every one moving like skating XD

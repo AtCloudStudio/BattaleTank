@@ -31,5 +31,4 @@ void AProjectile::LaunchProjectile(float Speed)
 {
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();
-	//UE_LOG(LogTemp, Warning, TEXT("At %f projectile launched at speed %f!"), GetWorld()->GetTimeSeconds(), Speed);
 }

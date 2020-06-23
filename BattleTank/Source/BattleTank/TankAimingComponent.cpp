@@ -44,22 +44,16 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 		ESuggestProjVelocityTraceOption::DoNotTrace);
 
 	if (!bHaveAimSolution)
-	{//TODO BUG movement oddly
+	{
 		return;
 	}
 	else
 	{
 		auto AimDirection = OUTLaunchVelocity.GetSafeNormal();
-		MoveBarrelTowards(AimDirection);
+		auto DeltaRotator =
+			AimDirection.Rotation() - Barrel->GetForwardVector().Rotation();
+
+		Turret->Rotate(DeltaRotator.Yaw);
+		Barrel->Elevate(DeltaRotator.Pitch);
 	}
-}
-
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
-{
-	//Calculate difference between current barrel rotation and AimDirection
-	auto DeltaRotator = 
-		AimDirection.Rotation() - Barrel->GetForwardVector().Rotation();
-
-	Turret->Rotate(DeltaRotator.Yaw);
-	Barrel->Elevate(DeltaRotator.Pitch);
 }

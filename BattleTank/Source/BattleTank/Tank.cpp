@@ -2,6 +2,7 @@
 
 #include "Tank.h"
 #include "TankAimingComponent.h"
+//#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 
@@ -9,8 +10,10 @@
 ATank::ATank()
 {
 	// No need to portect pointers as added at construction
-	TankAimingComponent = 
-		CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
+	TankAimingComponent = CreateDefaultSubobject
+		<UTankAimingComponent>(FName("Aiming Component"));
+	//TankMovementComponent = CreateDefaultSubobject
+	//	<UTankMovementComponent>(FName("Movement Component"));
 }
 
 // Called to bind functionality to input
