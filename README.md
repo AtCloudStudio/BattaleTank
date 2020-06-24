@@ -54,3 +54,9 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Realized player tank turning left and right
 * Realized AI Tanks auto move towards to player tank
 * That is funny every one moving like skating XD
+
+### Day 07
+* Learned Unreal Engine C++ Enumerator, added tank aiming state (different colors for crosshair at each state)
+* Aiming system code refactored, which caused lots of bugs
+* Learned how to and try to fix those bugs
+* All day work, whole tank architecture remade, finally fixed the bugs, what a long day

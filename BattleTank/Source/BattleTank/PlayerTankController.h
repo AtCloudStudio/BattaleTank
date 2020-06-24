@@ -7,15 +7,21 @@
 #include "GameFramework/PlayerController.h"
 #include "PlayerTankController.generated.h"
 
-class ATank;
+class UTankAimingComponent;
 
+// Responsible for player aiming and camera control
 UCLASS()
 class BATTLETANK_API APlayerTankController : public APlayerController
 {
 	GENERATED_BODY()
 	
-public:
+protected:
 	virtual void BeginPlay() override;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FindAimingComponent(UTankAimingComponent* AimingComponentReference);
+
+public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
@@ -23,7 +29,6 @@ private:
 	UPROPERTY(EditDefaultsOnly) float CrosshairLocationY = 0.333333;
 	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000.0f;
 
-	ATank* GetControlledTank() const;
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 	//move barrel to aim where crosshair intersects the world

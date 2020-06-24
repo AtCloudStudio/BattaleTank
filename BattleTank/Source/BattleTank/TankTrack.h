@@ -17,7 +17,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetThrottle(float Throttle);
 
-	//Max force per track in Newtons *Forece = Mass * Accelleration
+	//Max force per track in Newtons 
+	//Note: Forece = Mass * Accelleration
+	//Assume at 1g accelleration
 	UPROPERTY(EditDefaultsOnly)
-	float TrackMaxForce = 80000000.0f;//Assume 40 tonne tank, and 1g accelleration
+	float TrackMaxForce = 50000000.0f;
 };

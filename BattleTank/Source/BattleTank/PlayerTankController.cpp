@@ -1,17 +1,21 @@
 // Copyright RyanXu @CloudStudio
 
 #include "PlayerTankController.h"
-#include "Tank.h"
+#include "TankAimingComponent.h"
 
 void APlayerTankController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!GetControlledTank())
+	auto AimingComponent = 
+		GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
+	if (!ensure(AimingComponent))
 	{
-		UE_LOG(LogTemp, Error, TEXT("%s missing PlayerTankController!"), 
-			*GetControlledTank()->GetName());
+		return;
 	}
+
+	FindAimingComponent(AimingComponent);
 }
 
 void APlayerTankController::Tick(float DeltaTime)
@@ -20,14 +24,12 @@ void APlayerTankController::Tick(float DeltaTime)
 	AimTowardsCrosshair();
 }
 
-ATank* APlayerTankController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-
 void APlayerTankController::AimTowardsCrosshair()
 {
-	if (!GetControlledTank())
+	auto AimingComponent =
+		GetPawn()->FindComponentByClass<UTankAimingComponent>();
+
+	if (!ensure(AimingComponent))
 	{
 		return;
 	}
@@ -37,9 +39,10 @@ void APlayerTankController::AimTowardsCrosshair()
 	if (GetSightRayHitLocation(HitLocation))
 	{
 		//If hits any visible actor, tell controlled tank to aim at this location
-		GetControlledTank()->AimAt(HitLocation);
+		AimingComponent->AimAt(HitLocation);
 	}
 }
+
 //Get world location of linetrace through crosshair, true if hits landscape
 bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 {
@@ -53,7 +56,7 @@ bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 
 	FHitResult HitResult;
 	FVector LineTraceEnd;
-	FCollisionQueryParams LineTraceParams(FName(TEXT("")), false, GetControlledTank());
+	FCollisionQueryParams LineTraceParams(FName(TEXT("")), false, GetPawn());
 
 	//Find crosshair screen position
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
@@ -82,7 +85,7 @@ bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 	{
 		//Set HitLocation
 		HitLocation = HitResult.Location;
-		//UE_LOG(LogTemp, Warning, TEXT("Hit result: %s"), *HitResult.GetActor()->GetName());
+
 		return true;
 	}
 	else

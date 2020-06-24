@@ -11,10 +11,8 @@ void UTankMovementComponent::SetTracksReference(UTankTrack* LeftTrackToSet, UTan
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if (!ensure(LeftTrack) || !ensure(RightTrack))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No track on %s"), *GetOwner()->GetName());
-
 		return;
 	}
 	
@@ -24,10 +22,8 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if (!ensure(LeftTrack) || !ensure(RightTrack))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No track on %s"), *GetOwner()->GetName());
-
 		return;
 	}
 

@@ -3,29 +3,38 @@
 #include "TankAimingComponent.h"
 #include "TankTurret.h"
 #include "TankBarrel.h"
+#include "Projectile.h"
 
-void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet)
+// Sets default values for this component's properties
+UTankAimingComponent::UTankAimingComponent()
 {
-	Turret = TurretToSet;
+	PrimaryComponentTick.bCanEverTick = true;
 }
 
-void UTankAimingComponent::SetBarrelReference(UTankBarrel* BarrelToSet)
+// Called when the game starts
+void UTankAimingComponent::BeginPlay()
 {
+	Super::BeginPlay();
+}
+
+// Called every frame
+void UTankAimingComponent::TickComponent(float DeltaTime, 
+	ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+}
+
+void UTankAimingComponent::InitializeAimingSystem
+(UTankTurret* TurretToSet, UTankBarrel* BarrelToSet)
+{
+	Turret = TurretToSet;
 	Barrel = BarrelToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
-	if (!Turret)
+	if (!ensure(Turret) || !ensure(Barrel))
 	{
-		UE_LOG(LogTemp, Error, TEXT("No turret on %s"), *GetOwner()->GetName());
-
-		return;
-	}
-	else if (!Barrel)
-	{
-		UE_LOG(LogTemp, Error, TEXT("No Barrel on %s"), *GetOwner()->GetName());
-
 		return;
 	}
 
@@ -55,5 +64,25 @@ void UTankAimingComponent::AimAt(FVector TargetLocation, float LaunchSpeed)
 
 		Turret->Rotate(DeltaRotator.Yaw);
 		Barrel->Elevate(DeltaRotator.Pitch);
+	}
+}
+
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel) || !ensure(ProjectileBluepirint))
+	{
+		return;
+	}
+
+	if (GetWorld()->GetTimeSeconds() - LastFireTime >= ReloadTime)
+	{
+		//Spawn a projectile at the socket location on the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBluepirint,
+			Barrel->GetSocketLocation(FName("Launch Port")),
+			Barrel->GetSocketRotation(FName("Launch Port")));
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = GetWorld()->GetTimeSeconds();
 	}
 }
