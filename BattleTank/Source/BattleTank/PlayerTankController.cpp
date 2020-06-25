@@ -26,6 +26,11 @@ void APlayerTankController::Tick(float DeltaTime)
 
 void APlayerTankController::AimTowardsCrosshair()
 {
+	if (!GetPawn())
+	{
+		return;
+	}
+
 	auto AimingComponent =
 		GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
@@ -51,12 +56,11 @@ bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 
 	FVector CameraLocation = PlayerCameraManager->GetCameraLocation();
 	FVector CameraDirection;
+	FVector LineTraceEnd;
 
 	FRotator CameraRotation = PlayerCameraManager->GetCameraRotation();
 
 	FHitResult HitResult;
-	FVector LineTraceEnd;
-	FCollisionQueryParams LineTraceParams(FName(TEXT("")), false, GetPawn());
 
 	//Find crosshair screen position
 	GetViewportSize(ViewportSizeX, ViewportSizeY);
@@ -80,8 +84,7 @@ bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 		HitResult,
 		CameraLocation,
 		LineTraceEnd,
-		ECC_Visibility,
-		LineTraceParams))
+		ECC_Visibility))
 	{
 		//Set HitLocation
 		HitLocation = HitResult.Location;

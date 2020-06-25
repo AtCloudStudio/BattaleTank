@@ -17,5 +17,6 @@ public:
 
 private:
 	//How close can the AI tank get
-	float AcceptanceRadius = 3000.0f;	//TODO Check raidus is in cm
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	float AcceptanceRadius = 60000.0f;
 };

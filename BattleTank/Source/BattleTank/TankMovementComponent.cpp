@@ -3,13 +3,13 @@
 #include "TankMovementComponent.h"
 #include "TankTrack.h"
 
-void UTankMovementComponent::SetTracksReference(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
+void UTankMovementComponent::InitializeTracks(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet)
 {
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
 
-void UTankMovementComponent::IntendMoveForward(float Throw)
+void UTankMovementComponent::MoveForward(float Throw)
 {
 	if (!ensure(LeftTrack) || !ensure(RightTrack))
 	{
@@ -20,7 +20,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 	RightTrack->SetThrottle(Throw);
 }
 
-void UTankMovementComponent::IntendTurnRight(float Throw)
+void UTankMovementComponent::TurnRight(float Throw)
 {
 	if (!ensure(LeftTrack) || !ensure(RightTrack))
 	{
@@ -39,6 +39,6 @@ void UTankMovementComponent::RequestDirectMove
 	auto ForwardThrow = FVector::DotProduct(TankForwardDirection, AIForwardIntention);
 	auto RightThrow = FVector::CrossProduct(TankForwardDirection, AIForwardIntention).Z;
 
-	IntendMoveForward(ForwardThrow);
-	IntendTurnRight(RightThrow);
+	MoveForward(ForwardThrow);
+	TurnRight(RightThrow);
 }

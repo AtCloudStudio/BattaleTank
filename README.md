@@ -49,14 +49,22 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Input binding for left and right track throttle
 * Realized tank move (forward and backward)
 * Bug: Unreal Engine crashed when tried to delete a TankTrack component from tank blueprint, which happened every time (X_X don't know how to fix it, but at least I had added both left and right track to the tank)
-* After reinitialized project files (some deletes, some cuts and pastes), finally got rid of the bug above ^^
+* After reinitialized project files (some deletes, some cuts and pastes), finally got rid of the bug above
 * Created TankMovementComponent, realized tank turn (not really)
 * Realized player tank turning left and right
 * Realized AI Tanks auto move towards to player tank
-* That is funny every one moving like skating XD
+* It is funny every tank's movement looks like skating
 
 ### Day 07
 * Learned Unreal Engine C++ Enumerator, added tank aiming state (different colors for crosshair at each state)
 * Aiming system code refactored, which caused lots of bugs
 * Learned how to and try to fix those bugs
-* All day work, whole tank architecture remade, finally fixed the bugs, what a long day
+* All day work, whole tank architecture rebuilt, finally fixed the bugs, what a long day
+
+### Day 08
+* Fixed sideway slippage problem when tank making turns
+* Improved Aiming system, now tank turret would choose the shorter route to rotate
+* Improved AI tanks firing time, now they would fire only at target locked
+* Created ammo display UI, added out of ammo aiming state
+* Realized ammo amount display
+* Created new blueprint class: AutoMortar, a stationary turret, that assembled from TankTurret, TankBarrel, and TankAimingComponent

@@ -16,16 +16,17 @@ class BATTLETANK_API UTankMovementComponent : public UNavMovementComponent
 	
 public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-	void SetTracksReference(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
+	void InitializeTracks(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	void IntendMoveForward(float Throw);
+	void MoveForward(float Throw);
 
 	UFUNCTION(BlueprintCallable, Category = "Input")
-	void IntendTurnRight(float Throw);
+	void TurnRight(float Throw);
 
-	// called from the pathfinding logic by AITankController
+	// Responsible for pathfinding logic of AITankController
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
