@@ -22,11 +22,14 @@ void AAITankController::Tick(float DeltaTime)
 		return;
 	}
 
-	MoveToActor(PlayerTank, AcceptanceRadius);
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
 	if (AimingComponent->GetAimingState() == EAimingState::Locked)
 	{
 		AimingComponent->Fire();
+	}
+	else
+	{
+		MoveToActor(PlayerTank, AcceptanceRadius);
 	}
 }

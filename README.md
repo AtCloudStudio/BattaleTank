@@ -68,3 +68,10 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Created ammo display UI, added out of ammo aiming state
 * Realized ammo amount display
 * Created new blueprint class: AutoMortar, a stationary turret, that assembled from TankTurret, TankBarrel, and TankAimingComponent
+
+### Day 09
+* Created and added projectile launch blast particle
+* Created and added projectile impact blast particle
+* Created and added projectile radial force
+* Realized destroy projectile after a delay
+* Created and added HealthBar UI blueprint class, made it work to display player and enimies's health
