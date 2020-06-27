@@ -2,6 +2,8 @@
 
 #include "PlayerTankController.h"
 #include "TankAimingComponent.h"
+#include "Tank.h"
+#include "Engine/World.h"
 
 void APlayerTankController::BeginPlay()
 {
@@ -16,6 +18,38 @@ void APlayerTankController::BeginPlay()
 	}
 
 	FindAimingComponent(AimingComponent);
+}
+
+void APlayerTankController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PlayerTank = Cast<ATank>(InPawn);
+
+		if (!PlayerTank)
+		{
+			return;
+		}
+
+		PlayerTank->OnDeath.AddUniqueDynamic(
+			this, &APlayerTankController::OnPlayerTankDeath);
+	}
+}
+
+void APlayerTankController::OnPlayerTankDeath()
+{
+	StartSpectatingOnly();
+
+	//FTimerHandle OUTTimer;
+	//GetWorld()->GetTimerManager().SetTimer(OUTTimer, this,
+	//	&APlayerTankController::DestroyPlayerTank, DestroyDelay, false);
+}
+
+void APlayerTankController::DestroyPlayerTank()
+{
+	//GetPawn()->Destroy();	//TODO bug
 }
 
 void APlayerTankController::Tick(float DeltaTime)
@@ -84,7 +118,7 @@ bool APlayerTankController::GetSightRayHitLocation(FVector& HitLocation) const
 		HitResult,
 		CameraLocation,
 		LineTraceEnd,
-		ECC_Visibility))
+		ECC_Camera))
 	{
 		//Set HitLocation
 		HitLocation = HitResult.Location;

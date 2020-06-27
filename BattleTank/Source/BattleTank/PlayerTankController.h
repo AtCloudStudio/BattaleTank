@@ -3,7 +3,6 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Engine/World.h"
 #include "GameFramework/PlayerController.h"
 #include "PlayerTankController.generated.h"
 
@@ -25,12 +24,21 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	UPROPERTY(EditDefaultsOnly) float CrosshairLocationX = 0.5f;
-	UPROPERTY(EditDefaultsOnly) float CrosshairLocationY = 0.333333;
-	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000.0f;
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPlayerTankDeath();
+
+	void DestroyPlayerTank();
 
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 	//move barrel to aim where crosshair intersects the world
 	void AimTowardsCrosshair();
+
+	UPROPERTY(EditDefaultsOnly) float CrosshairLocationX = 0.5f;
+	UPROPERTY(EditDefaultsOnly) float CrosshairLocationY = 0.333333;
+	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000.0f;
+
+	float DestroyDelay = 3.0f;
 };

@@ -7,6 +7,12 @@ ATank::ATank()
 	PrimaryActorTick.bCanEverTick = false;
 }
 
+void ATank::BeginPlay()
+{
+	Super::BeginPlay();
+	CurrentHealth = StartingHealth;
+}
+
 float ATank::TakeDamage(
 	float DamageAmount, 
 	FDamageEvent const& DamageEvent, 
@@ -20,12 +26,8 @@ float ATank::TakeDamage(
 
 	if (CurrentHealth <= 0)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("GameOver!"));
+		OnDeath.Broadcast();
 	}
-	//else
-	//{
-	//	UE_LOG(LogTemp, Warning, TEXT("Damage:%i, Health:%i"), DamageToApply, CurrentHealth);
-	//}
 
 	return DamageToApply;
 }

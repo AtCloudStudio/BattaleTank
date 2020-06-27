@@ -75,3 +75,9 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Created and added projectile radial force
 * Realized destroy projectile after a delay
 * Created and added HealthBar UI blueprint class, made it work to display player and enimies's health
+
+### Day 10
+* Changed health bar to enimies health bar, and made it hide on player tank
+* Created and added player health display UI blueprint class, now the player health will display on the screen rather than on the player tank 
+* Realized Triggering player death
+* Realized switching between first person camera and third person camera
