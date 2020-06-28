@@ -9,8 +9,7 @@ void APlayerTankController::BeginPlay()
 {
 	Super::BeginPlay();
 
-	auto AimingComponent = 
-		GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
 	if (!ensure(AimingComponent))
 	{
@@ -18,6 +17,12 @@ void APlayerTankController::BeginPlay()
 	}
 
 	FindAimingComponent(AimingComponent);
+}
+
+void APlayerTankController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	AimTowardsCrosshair();
 }
 
 void APlayerTankController::SetPawn(APawn* InPawn)
@@ -41,34 +46,12 @@ void APlayerTankController::SetPawn(APawn* InPawn)
 void APlayerTankController::OnPlayerTankDeath()
 {
 	StartSpectatingOnly();
-
-	//FTimerHandle OUTTimer;
-	//GetWorld()->GetTimerManager().SetTimer(OUTTimer, this,
-	//	&APlayerTankController::DestroyPlayerTank, DestroyDelay, false);
-}
-
-void APlayerTankController::DestroyPlayerTank()
-{
-	//GetPawn()->Destroy();	//TODO bug
-}
-
-void APlayerTankController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-	AimTowardsCrosshair();
+	//TODO Really destroy player tank
 }
 
 void APlayerTankController::AimTowardsCrosshair()
 {
-	if (!GetPawn())
-	{
-		return;
-	}
-
-	auto AimingComponent =
-		GetPawn()->FindComponentByClass<UTankAimingComponent>();
-
-	if (!ensure(AimingComponent))
+	if (!GetPawn() || !ensure(AimingComponent))
 	{
 		return;
 	}

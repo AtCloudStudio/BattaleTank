@@ -81,3 +81,10 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Created and added player health display UI blueprint class, now the player health will display on the screen rather than on the player tank 
 * Realized Triggering player death
 * Realized switching between first person camera and third person camera
+
+### Day 11
+* Code refactored
+* Created new blueprint class: PlayerTank and EnemyTank that based on original Tank blueprint
+* Created new level: Physics Constraint Experiment
+* Created TankSuspensionSystem C++ class and blueprint class
+* Added new component C++ class TankSuspensionSocket to Tank blueprint

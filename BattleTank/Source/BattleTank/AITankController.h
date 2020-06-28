@@ -6,6 +6,9 @@
 #include "AIController.h"
 #include "AITankController.generated.h"
 
+class UTankAimingComponent;
+class ATank;
+
 UCLASS()
 class BATTLETANK_API AAITankController : public AAIController
 {
@@ -27,7 +30,6 @@ private:
 	UFUNCTION()
 	void OnControlledTankDeath();
 
-	void DestroyControlledTank();
-
-	float DestroyDelay = 3.0f;
+	UTankAimingComponent* AimingComponent = nullptr;
+	ATank* PlayerTank = nullptr;
 };

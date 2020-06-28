@@ -6,6 +6,10 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+class UTankTurret;
+class UTankBarrel;
+class AProjectile;
+
 UENUM()
 enum class EAimingState : uint8
 {
@@ -15,10 +19,6 @@ enum class EAimingState : uint8
 	OutOfAmmo
 };
 
-class UTankTurret;
-class UTankBarrel;
-class AProjectile;
-
 // Holds tank turret and barrel's properties and movement functions
 UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
 class BATTLETANK_API UTankAimingComponent : public UActorComponent
@@ -26,7 +26,6 @@ class BATTLETANK_API UTankAimingComponent : public UActorComponent
 	GENERATED_BODY()
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	// Enumerator for aiming state
@@ -34,10 +33,8 @@ protected:
 	EAimingState AimingState = EAimingState::Reloading;
 
 public:
-	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, 
 	FActorComponentTickFunction* ThisTickFunction) override;
 	
@@ -73,5 +70,5 @@ private:
 
 	float LastFireTime = 0.0f;
 
-	FVector AimDirection;
+	FVector TargetAimDirection;
 };

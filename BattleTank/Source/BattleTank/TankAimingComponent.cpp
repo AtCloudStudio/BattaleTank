@@ -37,7 +37,7 @@ ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 	{
 		return;
 	}
-	else if (!Barrel->GetForwardVector().Equals(AimDirection, 0.01f))
+	else if (!Barrel->GetForwardVector().Equals(TargetAimDirection, 0.01f))
 	{
 		AimingState = EAimingState::Aiming;// if barrel is moving
 	}
@@ -52,11 +52,6 @@ void UTankAimingComponent::InitializeAimingSystem
 {
 	Turret = TurretToSet;
 	Barrel = BarrelToSet;
-}
-
-EAimingState UTankAimingComponent::GetAimingState() const
-{
-	return AimingState;
 }
 
 void UTankAimingComponent::AimAt(FVector TargetLocation)
@@ -84,9 +79,9 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 	}
 	else
 	{
-		AimDirection = OUTLaunchVelocity.GetSafeNormal();
+		TargetAimDirection = OUTLaunchVelocity.GetSafeNormal();
 		auto DeltaRotator =
-			AimDirection.Rotation() - Barrel->GetForwardVector().Rotation();
+			TargetAimDirection.Rotation() - Barrel->GetForwardVector().Rotation();
 		
 		// Avoid turret always rotates the long route
 		if (FMath::Abs(DeltaRotator.Yaw) < 180)
@@ -121,6 +116,11 @@ void UTankAimingComponent::Fire()
 		LastFireTime = GetWorld()->GetTimeSeconds();
 		AmmoAmount--;
 	}
+}
+
+EAimingState UTankAimingComponent::GetAimingState() const
+{
+	return AimingState;
 }
 
 int UTankAimingComponent::GetAmmoAmount() const

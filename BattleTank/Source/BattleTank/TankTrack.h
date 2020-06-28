@@ -13,14 +13,11 @@ class BATTLETANK_API UTankTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 
 protected:
-	// Called when the game starts
 	virtual void BeginPlay() override;
 
 private:
-	// Sets default values for this component's properties
 	UTankTrack();
 
-	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 		FActorComponentTickFunction* ThisTickFunction) override;
 
@@ -35,7 +32,7 @@ private:
 	void DriveTrack();
 	void SidewaySlippageCorrection();
 
-	UStaticMeshComponent* Tank = nullptr;
+	UStaticMeshComponent* TankBody = nullptr;
 	float CurrentThrottle = 0.0f;
 
 public:

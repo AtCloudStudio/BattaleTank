@@ -7,55 +7,20 @@
 void AAITankController::BeginPlay()
 {
 	Super::BeginPlay();
-}
+	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-void AAITankController::SetPawn(APawn* InPawn)
-{
-	Super::SetPawn(InPawn);
-
-	if (InPawn)
-	{
-		auto ControlledTank = Cast<ATank>(InPawn);
-
-		if (!ControlledTank)
-		{
-			return;
-		}
-
-		//Subscribe local function to the tank's death event
-		ControlledTank->OnDeath.AddUniqueDynamic(
-			this, &AAITankController::OnControlledTankDeath);
-	}
-}
-
-void AAITankController::OnControlledTankDeath()
-{
-	if (!GetPawn())
+	if (!ensure(PlayerTank) || !ensure(AimingComponent))
 	{
 		return;
 	}
-
-	GetPawn()->DetachFromControllerPendingDestroy();
-	FTimerHandle OUTTimer;
-	GetWorld()->GetTimerManager().SetTimer(OUTTimer, this,
-		&AAITankController::DestroyControlledTank, DestroyDelay, false);
-}
-
-void AAITankController::DestroyControlledTank()
-{
-	GetPawn()->Destroy();	//TODO Bug
 }
 
 void AAITankController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	auto ControlledTank = GetPawn();
-	auto PlayerTank = GetWorld()->GetFirstPlayerController()->GetPawn();
-	auto AimingComponent =
-		GetPawn()->FindComponentByClass<UTankAimingComponent>();
-
-	if (!PlayerTank || !ensure(ControlledTank) || !ensure(AimingComponent))
+	if (!PlayerTank || !GetPawn() || !AimingComponent)
 	{
 		return;
 	}
@@ -70,4 +35,34 @@ void AAITankController::Tick(float DeltaTime)
 	{
 		MoveToActor(PlayerTank, AcceptanceRadius);
 	}
+}
+
+void AAITankController::SetPawn(APawn* InPawn)
+{
+	Super::SetPawn(InPawn);
+
+	if (InPawn)
+	{
+		auto PossessedTank = Cast<ATank>(InPawn);
+
+		if (!PossessedTank)
+		{
+			return;
+		}
+
+		//Subscribe local function to the tank's death event
+		PossessedTank->OnDeath.AddUniqueDynamic(
+			this, &AAITankController::OnControlledTankDeath);
+	}
+}
+
+void AAITankController::OnControlledTankDeath()
+{
+	if (!GetPawn())
+	{
+		return;
+	}
+
+	GetPawn()->DetachFromControllerPendingDestroy();
+	//TODO Really destroy AI tank
 }

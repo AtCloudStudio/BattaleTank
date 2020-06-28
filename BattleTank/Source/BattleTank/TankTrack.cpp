@@ -10,7 +10,7 @@ UTankTrack::UTankTrack()
 void UTankTrack::BeginPlay()
 {
 	Super::BeginPlay();
-	Tank = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	TankBody = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
 	OnComponentHit.AddDynamic(this, &UTankTrack::OnHit);
 }
 
@@ -28,19 +28,19 @@ void UTankTrack::OnHit(
 
 void UTankTrack::DriveTrack()
 {
-	if (!ensure(Tank))
+	if (!ensure(TankBody))
 	{
 		return;
 	}
 
-	Tank->AddForceAtLocation(
+	TankBody->AddForceAtLocation(
 		GetForwardVector() * CurrentThrottle * TrackMaxForce,
 		GetComponentLocation());
 }
 
 void UTankTrack::SidewaySlippageCorrection()
 {
-	if (!ensure(Tank))
+	if (!ensure(TankBody))
 	{
 		return;
 	}
@@ -54,8 +54,8 @@ void UTankTrack::SidewaySlippageCorrection()
 		FVector::DotProduct(GetRightVector(), GetComponentVelocity());
 	auto CorrectionAcceleraton =
 		SlippageSpped / GetWorld()->GetDeltaSeconds() * GetRightVector() * -1;
-	auto CorrectionForce = Tank->GetMass() * CorrectionAcceleraton / 2;
-	Tank->AddForce(CorrectionForce);
+	auto CorrectionForce = TankBody->GetMass() * CorrectionAcceleraton / 2;
+	TankBody->AddForce(CorrectionForce);
 }
 
 void UTankTrack::SetThrottle(float Throttle)

@@ -12,7 +12,8 @@ class BATTLETANK_API UTankTurret : public UStaticMeshComponent
 	GENERATED_BODY()
 
 public:
-	//Relative speed range: (-1, 1)
+	/*Move turret right amount per frame
+	Relative speed range: (-1, 1)*/
 	void Rotate(float RelativeSpeed);
 
 private:

@@ -6,8 +6,6 @@
 #include "GameFramework/PlayerController.h"
 #include "PlayerTankController.generated.h"
 
-class UTankAimingComponent;
-
 // Responsible for player aiming and camera control
 UCLASS()
 class BATTLETANK_API APlayerTankController : public APlayerController
@@ -29,8 +27,6 @@ private:
 	UFUNCTION()
 	void OnPlayerTankDeath();
 
-	void DestroyPlayerTank();
-
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 	//move barrel to aim where crosshair intersects the world
@@ -40,5 +36,5 @@ private:
 	UPROPERTY(EditDefaultsOnly) float CrosshairLocationY = 0.333333;
 	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000.0f;
 
-	float DestroyDelay = 3.0f;
+	UTankAimingComponent* AimingComponent = nullptr;
 };
