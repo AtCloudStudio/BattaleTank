@@ -19,7 +19,7 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Created tank blueprint
 * Added third person camera to Tank blueprint 
 * Created new blueprint class "Input Setup", setup input binding for camera control
-* Wired-up Input Setup blueprint, realized controlling camera axis x and y, zoom in and out 
+* Wired-up Input Setup blueprint, Implemented controlling camera axis x and y, zoom in and out 
 
 ### Day 03
 * Created player tank crosshair UI
@@ -35,11 +35,11 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Tried to make barrel elevate, but failed
 
 ### Day 05
-* Realized barrel auto elevate towards aim direction
+* Implemented barrel auto elevate towards aim direction
 * Created TankTurret C++ class
-* Realized turret auto rotate towards aim direction
+* Implemented turret auto rotate towards aim direction
 * Created Projectile C++ class, created a blueprint class based on it
-* Realized tanks fire, but projectiles have no parabolic
+* Implemented tanks fire, but projectiles have no parabolic
 * Code refactored
 
 ### Day 06
@@ -47,12 +47,12 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Added simpled collision to tank and projectile
 * Created TankTrack C++ class (component to apply movement force to the tank)
 * Input binding for left and right track throttle
-* Realized tank move (forward and backward)
+* Implemented tank move (forward and backward)
 * Bug: Unreal Engine crashed when tried to delete a TankTrack component from tank blueprint, which happened every time (X_X don't know how to fix it, but at least I had added both left and right track to the tank)
 * After reinitialized project files (some deletes, some cuts and pastes), finally got rid of the bug above
-* Created TankMovementComponent, realized tank turn (not really)
-* Realized player tank turning left and right
-* Realized AI Tanks auto move towards to player tank
+* Created TankMovementComponent, Implemented tank turn (not really)
+* Implemented player tank turning left and right
+* Implemented AI Tanks auto move towards to player tank
 * It is funny every tank's movement looks like skating
 
 ### Day 07
@@ -66,21 +66,21 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Improved Aiming system, now tank turret would choose the shorter route to rotate
 * Improved AI tanks firing time, now they would fire only at target locked
 * Created ammo display UI, added out of ammo aiming state
-* Realized ammo amount display
+* Implemented ammo amount display
 * Created new blueprint class: AutoMortar, a stationary turret, that assembled from TankTurret, TankBarrel, and TankAimingComponent
 
 ### Day 09
 * Created and added projectile launch blast particle
 * Created and added projectile impact blast particle
 * Created and added projectile radial force
-* Realized destroy projectile after a delay
+* Implemented destroy projectile after a delay
 * Created and added HealthBar UI blueprint class, made it work to display player and enimies's health
 
 ### Day 10
 * Changed health bar to enimies health bar, and made it hide on player tank
 * Created and added player health display UI blueprint class, now the player health will display on the screen rather than on the player tank 
-* Realized Triggering player death
-* Realized switching between first person camera and third person camera
+* Implemented Triggering player death
+* Implemented switching between first person camera and third person camera
 
 ### Day 11
 * Code refactored
@@ -88,3 +88,8 @@ You can check out the course here: [Unreal Engine Developer]( http://gdev.tv/urc
 * Created new level: Physics Constraint Experiment
 * Created TankSuspensionSystem C++ class and blueprint class
 * Added new component C++ class TankSuspensionSocket to Tank blueprint
+
+### Day 12
+* Built new C++ class TankWheel to replaced TankSuspentionSocket, and added them on Tank blueprint
+* Finished tank suspension system, added wheels to tank, now it moves smoothy
+* End of this section

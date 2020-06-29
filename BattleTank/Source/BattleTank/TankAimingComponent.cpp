@@ -33,10 +33,7 @@ ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 	{
 		AimingState = EAimingState::Reloading;
 	}
-	else if (!ensure(Barrel))
-	{
-		return;
-	}
+	else if (!ensure(Barrel)) return;
 	else if (!Barrel->GetForwardVector().Equals(TargetAimDirection, 0.01f))
 	{
 		AimingState = EAimingState::Aiming;// if barrel is moving
@@ -56,10 +53,7 @@ void UTankAimingComponent::InitializeAimingSystem
 
 void UTankAimingComponent::AimAt(FVector TargetLocation)
 {
-	if (!ensure(Turret) || !ensure(Barrel))
-	{
-		return;
-	}
+	if (!ensure(Turret) || !ensure(Barrel)) return;
 
 	FVector OUTLaunchVelocity(0);
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Launch Port"));
@@ -73,10 +67,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 		false,
 		0.0f,
 		0.0f,
-		ESuggestProjVelocityTraceOption::DoNotTrace))
-	{
-		return;
-	}
+		ESuggestProjVelocityTraceOption::DoNotTrace)) return;
 	else
 	{
 		TargetAimDirection = OUTLaunchVelocity.GetSafeNormal();
@@ -99,10 +90,7 @@ void UTankAimingComponent::AimAt(FVector TargetLocation)
 
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel) || !ensure(ProjectileBluepirint))
-	{
-		return;
-	}
+	if (!ensure(Barrel) || !ensure(ProjectileBluepirint)) return;
 
 	if (AmmoAmount > 0 && AimingState != EAimingState::Reloading)
 	{

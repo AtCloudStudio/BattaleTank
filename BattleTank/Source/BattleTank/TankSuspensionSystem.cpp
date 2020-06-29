@@ -6,23 +6,22 @@
 
 ATankSuspensionSystem::ATankSuspensionSystem()
 {
- 	PrimaryActorTick.bCanEverTick = false;
+ 	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.TickGroup = TG_PostPhysics;
 
 	TankAxleSpring = CreateDefaultSubobject
 		<UPhysicsConstraintComponent>(FName("Tank Axle Spring"));
 	SetRootComponent(TankAxleSpring);
 
-	SuspensionAxle =
-		CreateDefaultSubobject<USphereComponent>(FName("Suspension Axle"));
-	SuspensionAxle->SetupAttachment(TankAxleSpring);
+	WheelAxle = CreateDefaultSubobject<USphereComponent>(FName("Wheel Axle"));
+	WheelAxle->SetupAttachment(TankAxleSpring);
 
 	AxleWheelSpring = CreateDefaultSubobject
 		<UPhysicsConstraintComponent>(FName("Axle Wheel Spring"));
-	AxleWheelSpring->SetupAttachment(SuspensionAxle);
+	AxleWheelSpring->SetupAttachment(WheelAxle);
 
-	SuspensionWheel = 
-		CreateDefaultSubobject<USphereComponent>(FName("Suspension Wheel"));
-	SuspensionWheel->SetupAttachment(SuspensionAxle);
+	Wheel = CreateDefaultSubobject<USphereComponent>(FName("Wheel"));
+	Wheel->SetupAttachment(AxleWheelSpring);
 }
 
 void ATankSuspensionSystem::BeginPlay()
@@ -30,6 +29,21 @@ void ATankSuspensionSystem::BeginPlay()
 	Super::BeginPlay();
 
 	SetupPhysicsConstraint();
+
+	if (!ensure(Wheel)) return;
+
+	Wheel->SetNotifyRigidBodyCollision(true);
+	Wheel->OnComponentHit.AddDynamic(this, &ATankSuspensionSystem::OnHit);
+}
+
+void ATankSuspensionSystem::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+	if (GetWorld()->TickGroup == TG_PostPhysics)
+	{
+		TotalForcePerFrame = 0;
+	}
 }
 
 void ATankSuspensionSystem::SetupPhysicsConstraint()
@@ -42,12 +56,23 @@ void ATankSuspensionSystem::SetupPhysicsConstraint()
 	if (!ensure(TankBody)) return;
 
 	TankAxleSpring->SetConstrainedComponents(
-		TankBody, NAME_None, SuspensionAxle, NAME_None);
+		TankBody, NAME_None, WheelAxle, NAME_None);
 	AxleWheelSpring->SetConstrainedComponents(
-		SuspensionAxle, NAME_None, SuspensionWheel, NAME_None);
+		WheelAxle, NAME_None, Wheel, NAME_None);
 }
 
-void ATankSuspensionSystem::Tick(float DeltaTime)
+void ATankSuspensionSystem::OnHit(
+	UPrimitiveComponent* HitComponent, 
+	AActor* OtherActor, 
+	UPrimitiveComponent* OtherComponent, 
+	FVector NormalImpulse, 
+	const FHitResult& Hit)
 {
-	Super::Tick(DeltaTime);
+	//Apply driving force when hit the ground
+	Wheel->AddForce(WheelAxle->GetForwardVector() * TotalForcePerFrame);
+}
+
+void ATankSuspensionSystem::AddDrivingForce(float DrivingForce)
+{
+	TotalForcePerFrame += DrivingForce;
 }

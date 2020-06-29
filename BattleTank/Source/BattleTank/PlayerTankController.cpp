@@ -9,12 +9,11 @@ void APlayerTankController::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (!ensure(GetPawn())) return;
+
 	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 
-	if (!ensure(AimingComponent))
-	{
-		return;
-	}
+	if (!ensure(AimingComponent)) return;
 
 	FindAimingComponent(AimingComponent);
 }
@@ -33,10 +32,7 @@ void APlayerTankController::SetPawn(APawn* InPawn)
 	{
 		auto PlayerTank = Cast<ATank>(InPawn);
 
-		if (!PlayerTank)
-		{
-			return;
-		}
+		if (!PlayerTank) return;
 
 		PlayerTank->OnDeath.AddUniqueDynamic(
 			this, &APlayerTankController::OnPlayerTankDeath);
@@ -51,10 +47,7 @@ void APlayerTankController::OnPlayerTankDeath()
 
 void APlayerTankController::AimTowardsCrosshair()
 {
-	if (!GetPawn() || !ensure(AimingComponent))
-	{
-		return;
-	}
+	if (!GetPawn() || !ensure(AimingComponent)) return;
 
 	FVector HitLocation;
 

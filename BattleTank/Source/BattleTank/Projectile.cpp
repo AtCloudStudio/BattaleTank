@@ -38,10 +38,7 @@ void AProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 
-	if (!ensure(CollisionMesh))
-	{
-		return;
-	}
+	if (!ensure(CollisionMesh)) return;
 
 	CollisionMesh->OnComponentHit.AddDynamic(this, &AProjectile::OnHit);
 }
@@ -53,10 +50,7 @@ void AProjectile::Tick(float DeltaTime)
 
 void AProjectile::LaunchProjectile(float Speed)
 {
-	if (!ensure(ProjectileMovement))
-	{
-		return;
-	}
+	if (!ensure(ProjectileMovement)) return;
 
 	ProjectileMovement->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovement->Activate();

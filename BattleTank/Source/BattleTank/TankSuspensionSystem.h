@@ -21,7 +21,19 @@ public:
 	ATankSuspensionSystem();
 	virtual void Tick(float DeltaTime) override;
 
+	void AddDrivingForce(float ForceMagnitude);
+
 private:	
+	void SetupPhysicsConstraint();
+
+	UFUNCTION()
+	void OnHit(
+		UPrimitiveComponent* HitComponent,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComponent,
+		FVector NormalImpulse,
+		const FHitResult& Hit);
+
 	UPROPERTY(VisibleAnyWhere, Category = "Components")
 	UPhysicsConstraintComponent* TankAxleSpring = nullptr;
 
@@ -29,10 +41,10 @@ private:
 	UPhysicsConstraintComponent* AxleWheelSpring = nullptr;
 
 	UPROPERTY(VisibleAnyWhere, Category = "Components")
-	USphereComponent* SuspensionAxle = nullptr;
+	USphereComponent* WheelAxle = nullptr;
 
 	UPROPERTY(VisibleAnyWhere, Category = "Components")
-	USphereComponent* SuspensionWheel = nullptr;
+	USphereComponent* Wheel = nullptr;
 
-	void SetupPhysicsConstraint();
+	float TotalForcePerFrame = 0.0f;
 };

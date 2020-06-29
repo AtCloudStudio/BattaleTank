@@ -10,20 +10,14 @@ void AAITankController::BeginPlay()
 	AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
 	PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 
-	if (!ensure(PlayerTank) || !ensure(AimingComponent))
-	{
-		return;
-	}
+	if (!ensure(PlayerTank) || !ensure(AimingComponent)) return;
 }
 
 void AAITankController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	if (!PlayerTank || !GetPawn() || !AimingComponent)
-	{
-		return;
-	}
+	if (!PlayerTank || !GetPawn() || !AimingComponent) return;
 
 	AimingComponent->AimAt(PlayerTank->GetActorLocation());
 
@@ -45,10 +39,7 @@ void AAITankController::SetPawn(APawn* InPawn)
 	{
 		auto PossessedTank = Cast<ATank>(InPawn);
 
-		if (!PossessedTank)
-		{
-			return;
-		}
+		if (!PossessedTank) return;
 
 		//Subscribe local function to the tank's death event
 		PossessedTank->OnDeath.AddUniqueDynamic(
@@ -58,10 +49,7 @@ void AAITankController::SetPawn(APawn* InPawn)
 
 void AAITankController::OnControlledTankDeath()
 {
-	if (!GetPawn())
-	{
-		return;
-	}
+	if (!GetPawn()) return;
 
 	GetPawn()->DetachFromControllerPendingDestroy();
 	//TODO Really destroy AI tank
